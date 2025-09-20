@@ -8,6 +8,8 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-moodapp}
       POSTGRES_USER: ${POSTGRES_USER:-mood}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-moodpass}
+      RUN_COLLECTSTATIC: "1"
+      RUN_COMPILEMESSAGES: "1"
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
