@@ -1,0 +1,47 @@
+{% extends "moods/base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "Heute" %} – MoodApp{% endblock %}
+
+{% block content %}
+  <h1>{% trans "Heute" %} – {{ today|date:"d.m.Y" }}</h1>
+
+  <div class="card">
+    <form method="post">
+      {% csrf_token %}
+
+      <div>
+        <strong>{% trans "Stimmung" %}</strong>
+        {% with current=form.score.value %}
+          <div class="scale" style="margin-top:.6rem;">
+            {% for value,label in form.fields.score.choices %}
+              <!-- WICHTIG: score-{{ value }} => z.B. score--4 bei -4 -->
+              <label class="scale-item score-{{ value }}">
+                <input
+                  type="radio"
+                  name="{{ form.score.name }}"
+                  id="id_score_{{ forloop.counter0 }}"
+                  value="{{ value }}"
+                  {% if current|stringformat:"s" == value|stringformat:"s" %}checked{% endif %}
+                  required
+                />
+                <span class="scale-text">{{ label }}</span>
+              </label>
+            {% endfor %}
+          </div>
+        {% endwith %}
+      </div>
+
+      <div style="margin-top:.9rem;">
+        <label for="{{ form.note.id_for_label }}"><strong>{% trans "Notiz" %}</strong></label><br/>
+        {{ form.note }}
+      </div>
+
+      <div style="margin-top:1rem;">
+        <button type="submit" class="btn btn-rock">{% trans "Speichern" %}</button>
+      </div>
+    </form>
+  </div>
+
+  <p class="muted">Skala: −4 … 0 … +4</p>
+{% endblock %}

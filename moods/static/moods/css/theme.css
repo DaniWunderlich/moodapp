@@ -1,0 +1,310 @@
+:root{
+  /* Negativ (hell -> dunkel) */
+  --neg-1: #f28b82;  /* light */
+  --neg-2: #ea4335;
+  --neg-3: #c5221f;
+  --neg-4: #a50e0e;  /* darkest */
+
+  /* Neutral */
+  --neutral: #9e9e9e;
+
+  /* Positiv (hell -> dunkel) */
+  --pos-1: #a5d6a7;  /* light */
+  --pos-2: #66bb6a;
+  --pos-3: #388e3c;
+  --pos-4: #1b5e20;  /* darkest */
+
+  /* Hovers / rings */
+  --hover-neg: #ffd9d4;
+  --hover-pos: #e7f5ea;
+  --hover-neutral: #ededed;
+  --focus-ring: rgba(0,0,0,.14);
+
+  /* Chart color (Horizon) */
+  --chart-stroke: #4997b7;
+  --grid: #e0e0e0;
+  --grid-zero: #cacaca;
+
+  /* Light theme base */
+  --bg: #ffffff;
+  --text: #111111;
+  --text-muted: #555555;
+  --panel: #ffffff;
+  --panel-border: #dddddd;
+  --zebra: #f9f9f9;
+  --hover-row: #616161;
+
+  /* Table header */
+  --thead-bg: #393939;
+  --thead-text: #ffffff;
+}
+
+/* Dark theme overrides (via <html data-theme="dark">) */
+html[data-theme="dark"]{
+  --bg: #121212;
+  --text: #e6e6e6;
+  --text-muted: #b8b8b8;
+  --panel: #1b1b1b;
+  --panel-border: #2a2a2a;
+  --zebra: #1f1f1f;
+  --hover-row: #2c2c2c;
+
+  --grid: #2e2e2e;
+  --grid-zero: #4a4a4a;
+
+  /* Table header dunkler, aber klar abgesetzt */
+  --thead-bg: #2b2b2b;
+  --thead-text: #f4f4f4;
+}
+
+/* Layout/Tables/Buttons */
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  margin: 1.5rem;
+}
+nav a { margin-right: 1rem; }
+.card {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+.muted { color: var(--text-muted); font-size: .95rem; }
+.center { text-align: center; }
+
+.table { border-collapse: collapse; width: 100%; }
+.table th, .table td {
+  border-bottom: 1px solid var(--panel-border);
+  padding: .5rem .25rem;
+  text-align: left;
+}
+/* Bessere Header + Kontrast */
+.table thead th { background: var(--thead-bg); color: var(--thead-text); }
+.table.zebra tbody tr:nth-child(even) { background-color: var(--zebra); }
+.table.hover tbody tr:hover { color: #fff !important; background-color: var(--hover-row) !important; }
+
+.btn { display: inline-block; padding: .5rem .9rem; border-radius: 6px; border: 0; cursor: pointer; }
+.btn-rock { color:#fff !important; background-color:#393939 !important; }
+
+/* Topbar */
+.topbar{
+  display:flex; justify-content:space-between; align-items:center;
+  gap:.75rem; margin-bottom:1rem; border-bottom:1px solid var(--panel-border);
+}
+
+/* Tabs / Karteireiter in einer Zeile */
+.tabs{ display:flex; gap:.25rem; align-items:flex-end; }
+.tab{
+  display:inline-block; padding:.45rem .8rem; text-decoration:none;
+  border:1px solid transparent; border-bottom:0;
+  border-radius:10px 10px 0 0; color:var(--text);
+  background: transparent;
+}
+.tab:hover{ background: var(--zebra); border-color: var(--panel-border); border-bottom-color: transparent; }
+.tab.active{
+  background: var(--panel); border:1px solid var(--panel-border); border-bottom-color: transparent;
+}
+/* farbige Aktive (leicht, damit nicht „knallt“) */
+.tab.active.tab-today{ background: var(--pos-1); border-color: var(--pos-1); color:#fff; }
+.tab.active.tab-history{ background: var(--neutral); border-color: var(--neutral); color:#fff; }
+.tab.active.tab-team{ background: #4997b7; border-color: #4997b7; color:#fff; }
+
+/* Language Dropdown mit SVG-Flags */
+.actions{ display:flex; align-items:center; gap:.5rem; }
+.langdrop{ position:relative; }
+.langbtn{
+  border:1px solid var(--panel-border); background:var(--panel); color:var(--text);
+  padding:.3rem .5rem; border-radius:8px; cursor:pointer; list-style:none;
+}
+.langdrop > summary{ list-style: none; }
+.langdrop[open] > summary{ outline: none; }
+.langmenu{
+  position:absolute; right:0; margin-top:.4rem; background:var(--panel); border:1px solid var(--panel-border);
+  border-radius:10px; padding:.35rem .4rem; display:flex; gap:.25rem; z-index:20;
+}
+.flagbtn{
+  border:1px solid var(--panel-border); background:var(--panel); border-radius:6px; padding:.15rem;
+  cursor:pointer;
+}
+.flagbtn:hover{ background: var(--zebra); }
+.flag{ width:22px; height:16px; display:block; }
+
+/* Theme Toggle */
+.themetoggle{
+  margin-left:.5rem; border:1px solid var(--panel-border); background:var(--panel);
+  color:var(--text); padding:.3rem .45rem; border-radius:8px; cursor:pointer;
+}
+.icon-moon{ display:none; } /* JS schaltet Icons um */
+
+/* =========================================================
+   Pills / Score-Badges – robust per data-score
+   ========================================================= */
+.pill {
+  display:inline-block; min-width: 2.2rem; text-align:center;
+  padding:.15rem .5rem; border-radius:.5rem; color:#fff; font-weight:600;
+}
+/* Negativ-Töne */
+.pill[data-score="-4"] { background: var(--neg-4) !important; }
+.pill[data-score="-3"] { background: var(--neg-3) !important; }
+.pill[data-score="-2"] { background: var(--neg-2) !important; }
+.pill[data-score="-1"] { background: var(--neg-1) !important; }
+/* Neutral */
+.pill[data-score="0"]  { background: var(--neutral) !important; }
+/* Positiv-Töne */
+.pill[data-score="1"]  { background: var(--pos-1) !important; }
+.pill[data-score="2"]  { background: var(--pos-2) !important; }
+.pill[data-score="3"]  { background: var(--pos-3) !important; }
+.pill[data-score="4"]  { background: var(--pos-4) !important; }
+
+/* (Kompatibilität) */
+.pill.score--4 { background: var(--neg-4); }
+.pill.score--3 { background: var(--neg-3); }
+.pill.score--2 { background: var(--neg-2); }
+.pill.score--1 { background: var(--neg-1); }
+.pill.score-0  { background: var(--neutral); }
+.pill.score-1  { background: var(--pos-1); }
+.pill.score-2  { background: var(--pos-2); }
+.pill.score-3  { background: var(--pos-3); }
+.pill.score-4  { background: var(--pos-4); }
+
+/* Prozentbalken (Team) */
+.bar { background-color: #eee; height: 10px; width: 100%; border-radius: 6px; overflow: hidden; }
+html[data-theme="dark"] .bar { background-color: #333; }
+.bar-fill { height: 100%; border-radius: 6px; }
+.bar-good { background-color: var(--pos-2) !important; }
+.bar-bad  { background-color: var(--neg-2) !important; }
+.bar-neutral { background-color: #cacaca !important; }
+html[data-theme="dark"] .bar-neutral { background-color: #777 !important; }
+
+/* W3-inspired (nur dort, wo noch benutzt) */
+.w3-hover-dark-gray:hover{color:#fff!important;background-color:#616161!important}
+.w3-white {color:#000 !important; background-color:#fff !important}
+/* FIX: im Dark-Mode soll w3-white NICHT weiß knallen */
+html[data-theme="dark"] .w3-white { background-color: var(--panel) !important; color: var(--text) !important; }
+.w3-rock-web {color:#fff !important; background-color:#393939 !important}
+.w3-text-dark-gray { color: var(--text-muted) !important; }
+
+/* =========================================================
+   Today page: Skala (Radio)
+   ========================================================= */
+.scale {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* dynamisch: 7, 9, ... */
+  gap: .5rem;
+}
+@media (max-width: 520px) { .scale { grid-template-columns: repeat(2, minmax(140px, 1fr)); } }
+
+.scale-item { position: relative; display: block; }
+.scale-item input[type="radio"] { position: absolute; opacity: 0; inset: 0; pointer-events: none; }
+
+.scale-text {
+  display: block;
+  padding: .6rem .7rem;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+  user-select: none;
+  transition: background-color .12s ease, border-color .12s ease, color .12s ease, transform .05s ease, box-shadow .12s ease;
+  line-height: 1.15;
+  min-height: 46px;
+}
+.scale-item input[type="radio"]:focus + .scale-text { box-shadow: 0 0 0 3px var(--focus-ring); }
+
+.score--4 .scale-text, .score--3 .scale-text, .score--2 .scale-text, .score--1 .scale-text { border-color: #f3b3ac; }
+.score-0  .scale-text { border-color: #cfcfcf; }
+.score-1  .scale-text, .score-2  .scale-text, .score-3  .scale-text, .score-4 .scale-text { border-color: #b8e4bf; }
+
+.score--4 .scale-text:hover, .score--3 .scale-text:hover, .score--2 .scale-text:hover, .score--1 .scale-text:hover { background-color: var(--hover-neg); }
+.score-0  .scale-text:hover { background-color: var(--hover-neutral); }
+.score-1  .scale-text:hover, .score-2  .scale-text:hover, .score-3  .scale-text:hover, .score-4 .scale-text:hover { background-color: var(--hover-pos); }
+.scale-item:hover .scale-text { transform: translateY(-1px); }
+
+.score--4 input:checked + .scale-text { background-color: var(--neg-4); color:#fff; border-color: var(--neg-4); }
+.score--3 input:checked + .scale-text { background-color: var(--neg-3); color:#fff; border-color: var(--neg-3); }
+.score--2 input:checked + .scale-text { background-color: var(--neg-2); color:#fff; border-color: var(--neg-2); }
+.score--1 input:checked + .scale-text { background-color: var(--neg-1); color:#fff; border-color: var(--neg-1); }
+
+.score-0  input:checked + .scale-text { background-color: var(--neutral); color:#fff; border-color: var(--neutral); }
+
+.score-1  input:checked + .scale-text { background-color: var(--pos-1); color:#fff; border-color: var(--pos-1); }
+.score-2  input:checked + .scale-text { background-color: var(--pos-2); color:#fff; border-color: var(--pos-2); }
+.score-3  input:checked + .scale-text { background-color: var(--pos-3); color:#fff; border-color: var(--pos-3); }
+.score-4  input:checked + .scale-text { background-color: var(--pos-4); color:#fff; border-color: var(--pos-4); }
+
+/* =========================================================
+   SVG Charts (History) – Balken um 0-Achse
+   ========================================================= */
+.sparkline { width: 100%; max-width: 720px; height: auto; }
+/* vertikale Bars (Fallback-Klassen – aktuell werden inline-fills genutzt) */
+.barv.pos { fill: var(--pos-2); }
+.barv.neg { fill: var(--neg-2); }
+/* Grid-Linien */
+.sparkline .grid line { stroke: var(--grid); stroke-width: 1; stroke-dasharray: 4 4; }
+/* 0-Achse: dicker & durchgezogen */
+.sparkline .grid .zero { stroke: var(--grid-zero); stroke-width: 2.5; stroke-dasharray: 0; }
+.sparkline .axislbl { fill: var(--text); font-size: 12px; }
+
+/* (Legacy: falls noch Pfad/Punkte aus früherem Liniendiagramm vorhanden) */
+.sparkline path { fill: none; stroke: var(--chart-stroke); stroke-width: 2; }
+.sparkline .pt { fill: #fff; stroke: var(--chart-stroke); stroke-width: 2; }
+
+/* === Link-Variablen (hell) === */
+:root{
+  --link: #4997b7;         /* Horizon */
+  --link-hover: #5ab1d1;
+  --link-visited: #3a86a0;
+}
+
+/* === Link-Variablen (dark) – heller für mehr Kontrast === */
+html[data-theme="dark"]{
+  --link: #7cc2dd;
+  --link-hover: #a2d8ea;
+  --link-visited: #68b8d3;
+}
+
+/* === Globale Links (Tabs haben eigene Styles, bleiben unberührt) === */
+a{
+  color: var(--link);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+a:hover,
+a:focus{
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+a:visited{
+  color: var(--link-visited);
+}
+a:focus-visible{
+  outline: 2px solid var(--link-hover);
+  outline-offset: 2px;
+}
+
+/* Spezifisch: Actions rechts oben (Login/Logout) und Bereichswechsel im Team-View */
+.actions a{ color: var(--link); }
+.actions a:hover{ color: var(--link-hover); }
+.card a{ color: var(--link); }
+.card a:hover{ color: var(--link-hover); }
+
+/* Verlauf: Zeitraum-Selector */
+.rangebar{
+  display:flex; justify-content:space-between; align-items:center; gap:.75rem; flex-wrap:wrap;
+}
+.rangeform{
+  display:flex; align-items:center; gap:.5rem;
+}
+.rangeform select{
+  padding:.25rem .5rem; border-radius:6px; border:1px solid var(--panel-border);
+  background:var(--panel); color:var(--text);
+}
+
+/* Inline-Stats: Pill + Zahl hübsch nebeneinander */
+.stat{
+  display:inline-flex;
+  align-items:center;
+  gap:.35rem;
+}

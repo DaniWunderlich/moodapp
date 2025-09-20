@@ -1,0 +1,129 @@
+{% extends "moods/base.html" %}
+{% load i18n l10n %}
+
+{% block title %}{% trans "Team" %} – MoodApp{% endblock %}
+
+{% block content %}
+  <h1 style="margin-bottom:.25rem;">{% trans "Team" %}</h1>
+
+  <!-- Tabs / Karteireiter -->
+  <div class="topbar" style="border-bottom:0;margin-bottom:.5rem;">
+    <div class="tabs">
+      <a class="tab {% if range_param != 'week' %}active tab-team{% endif %}" href="{% url 'moods:team' %}">
+        {% trans "Aggregiert für heute" %}
+      </a>
+      <a class="tab {% if range_param == 'week' %}active tab-team{% endif %}" href="{% url 'moods:team' %}?range=week">
+        {% trans "Woche (Details je Tag)" %}
+      </a>
+    </div>
+  </div>
+
+  {% if range_param != "week" %}
+    <div class="card">
+      <!-- Zeitraum-Auswahl (auto-submit bei Änderung) -->
+      <form method="get" class="langform" id="aggDaysForm" style="margin-bottom:.5rem; display:flex; gap:.5rem; align-items:center;">
+        <label for="days"><strong>{% trans "Zeitraum" %}</strong></label>
+        <select id="days" name="days" onchange="this.form.submit()">
+          {% for d in days_choices %}
+            <option value="{{ d }}" {% if days == d %}selected{% endif %}>
+              {% if d == 1 %}
+                {% trans "Heute" %}
+              {% else %}
+                {% blocktrans with d=d %}Letzte {{ d }} Tage{% endblocktrans %}
+              {% endif %}
+            </option>
+          {% endfor %}
+        </select>
+        <noscript>
+          <button class="btn btn-rock" type="submit">{% trans "Anzeigen" %}</button>
+        </noscript>
+      </form>
+
+      <p class="muted" style="margin:.25rem 0 .75rem 0;">
+        {% blocktrans with a=date_from|date:"d.m.Y" b=date_to|date:"d.m.Y" %}Zeitraum: {{ a }} – {{ b }}{% endblocktrans %}
+        &nbsp;&middot;&nbsp;
+        {% blocktrans with n=count %}Einträge: {{ n }}{% endblocktrans %}
+      </p>
+
+      <h3 style="margin-top:.25rem;">
+        {% if days == 1 %}
+          {% trans "Verteilung nach Score – heute" %}
+        {% else %}
+          {% blocktrans with d=days %}Verteilung nach Score – letzte {{ d }} Tage{% endblocktrans %}
+        {% endif %}
+      </h3>
+
+      {% if count > 0 %}
+        {% localize off %}
+        <svg class="sparkline" viewBox="0 0 {{ chart.width }} {{ chart.height }}"
+             role="img" aria-label="{% trans 'Score-Verteilung' %}">
+          <desc>{% trans "Balkendiagramm der Team-Score-Verteilung" %}</desc>
+
+          <!-- X-Achse (unten) -->
+          <line x1="0" y1="{{ chart.axis_y }}" x2="{{ chart.width }}" y2="{{ chart.axis_y }}" class="grid zero"></line>
+
+          <!-- Balken -4..+4 -->
+          {% for b in chart.bars %}
+            <rect x="{{ b.x }}" y="{{ b.y }}" width="{{ b.w }}" height="{{ b.h }}" rx="3" ry="3"
+                  style="fill: {{ b.fill }}"></rect>
+            {% if b.count > 0 %}
+              <text x="{{ b.cx }}" y="{{ b.y|add:'-4' }}" class="axislbl" text-anchor="middle">{{ b.count }}</text>
+            {% endif %}
+            <!-- X-Labels unterhalb -->
+            <text x="{{ b.cx }}" y="{{ chart.x_labels_y }}" class="axislbl" text-anchor="middle">{{ b.score }}</text>
+          {% endfor %}
+        </svg>
+        {% endlocalize %}
+
+        <!-- Kennzahlen -->
+        <div class="card" style="margin-top:.75rem;">
+          <h3 style="margin-top:0;">{% trans "Kennzahlen" %}</h3>
+          <p style="margin:.25rem 0;">
+            <strong>{% trans "Durchschnitt" %}:</strong>
+            {% if avg is not None %}
+              <span class="pill" data-score="{{ avg|floatformat:0 }}">{{ avg|floatformat:0 }}</span>
+              {{ avg|floatformat:2 }}
+            {% else %}—{% endif %}
+            &nbsp;&nbsp;
+            <strong>{% trans "Median" %}:</strong>
+            {% if med is not None %}
+              <span class="pill" data-score="{{ med|floatformat:0 }}">{{ med|floatformat:0 }}</span>
+              {{ med|floatformat:0 }}
+            {% else %}—{% endif %}
+          </p>
+        </div>
+
+        <!-- Tabelle Verteilung -->
+        <div class="card" style="margin-top:.75rem;">
+          <table class="table zebra hover">
+            <thead class="thead">
+              <tr>
+                <th>{% trans "Score" %}</th>
+                <th>{% trans "Label" %}</th>
+                <th>{% trans "Anzahl" %}</th>
+                <th>{% trans "Anteil" %}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for r in rows %}
+                <tr class="w3-hover-dark-gray">
+                  <td><span class="pill" data-score="{{ r.score }}">{{ r.score }}</span></td>
+                  <td>{{ r.label }}</td>
+                  <td>{{ r.count }}</td>
+                  <td>{{ r.percent|floatformat:1 }}%</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <p class="muted" style="margin:.5rem 0 0 0;">
+            {% trans "Anonym: Es werden nur Aggregatwerte angezeigt, keine Nutzerliste." %}
+          </p>
+        </div>
+      {% else %}
+        <p>{% trans "Noch keine Einträge im gewählten Zeitraum." %}</p>
+      {% endif %}
+    </div>
+  {% else %}
+    {# Wochen-Detailansicht wird in team_overview_week.html gerendert #}
+  {% endif %}
+{% endblock %}

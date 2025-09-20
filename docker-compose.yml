@@ -1,0 +1,51 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-moodapp}
+      POSTGRES_USER: ${POSTGRES_USER:-mood}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-moodpass}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    environment:
+      # Django / Settings (passen zu deiner settings.py mit django-environ)
+      DJANGO_DEBUG: "0"
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-change-me}
+      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:-localhost,127.0.0.1}
+      DJANGO_TIME_ZONE: ${DJANGO_TIME_ZONE:-Europe/Zurich}
+      DJANGO_USE_TZ: "1"
+      DJANGO_USE_WHITENOISE: "1"
+      DJANGO_SECURE_SSL_REDIRECT: "0"
+      DJANGO_SESSION_COOKIE_SECURE: "0"
+      DJANGO_CSRF_COOKIE_SECURE: "0"
+      DJANGO_CSRF_TRUSTED_ORIGINS: ${DJANGO_CSRF_TRUSTED_ORIGINS:-http://localhost:8000}
+      # DB via django-environ
+      DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg://mood:moodpass@db:5432/moodapp}
+      # Sprache default
+      LANGUAGE_CODE: ${LANGUAGE_CODE:-de-ch}
+    ports:
+      - "8000:8000"
+    # Optional: persistente Medien (falls später Bilder/Uploads)
+    # volumes:
+    #   - media:/app/media
+
+volumes:
+  pgdata:
+  # media:

@@ -1,0 +1,73 @@
+{% extends "moods/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Team – Woche" %} – MoodApp{% endblock %}
+
+{% block content %}
+  <h1 style="margin-bottom:.25rem;">{% trans "Team – Woche" %}</h1>
+
+  <!-- Tabs / Karteireiter -->
+  <div class="topbar" style="border-bottom:0;margin-bottom:.5rem;">
+    <div class="tabs">
+      <a class="tab tab-team" href="{% url 'moods:team' %}">
+        {% trans "Aggregiert für heute" %}
+      </a>
+      <a class="tab active tab-team" href="{% url 'moods:team' %}?range=week">
+        {% trans "Woche (Details je Tag)" %}
+      </a>
+    </div>
+  </div>
+
+  <p class="muted" style="margin:.25rem 0 .75rem 0;">
+    {% blocktrans with a=date_from|date:"d.m.Y" b=date_to|date:"d.m.Y" %}Zeitraum: {{ a }} – {{ b }}{% endblocktrans %}
+    &nbsp;&middot;&nbsp;
+    {% blocktrans with n=weekly_total %}Einträge: {{ n }}{% endblocktrans %}
+  </p>
+
+  <div class="card">
+    <table class="table zebra hover">
+      <thead class="thead">
+        <tr>
+          <th>{% trans "Datum" %}</th>
+          <th>{% trans "Anzahl Einträge" %}</th>
+          <th title="{% trans 'arithmetisches Mittel' %}">{% trans "Durchschnitt (Ø)" %}</th>
+          <th title="{% trans 'Median der Einzelwerte' %}">{% trans "Median" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in day_rows %}
+          <tr class="w3-hover-dark-gray">
+            <td>{{ r.date|date:"d.m.Y" }}</td>
+            <td>{{ r.total }}</td>
+            <td>
+              {% if r.avg is not None %}
+                <span class="pill" data-score="{{ r.avg_bucket }}">{{ r.avg|floatformat:2 }}</span>
+              {% else %}—{% endif %}
+            </td>
+            <td>
+              {% if r.med is not None %}
+                <span class="pill" data-score="{{ r.med_bucket }}">{{ r.med|floatformat:0 }}</span>
+              {% else %}—{% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+
+        <!-- Wochen-Summe -->
+        <tr>
+          <td><strong>{% trans "Summe/Woche" %}</strong></td>
+          <td><strong>{{ weekly_total }}</strong></td>
+          <td>
+            {% if weekly_avg is not None %}
+              <span class="pill" data-score="{{ weekly_avg_bucket }}">{{ weekly_avg|floatformat:2 }}</span>
+            {% else %}—{% endif %}
+          </td>
+          <td>
+            {% if weekly_med is not None %}
+              <span class="pill" data-score="{{ weekly_med_bucket }}">{{ weekly_med|floatformat:0 }}</span>
+            {% else %}—{% endif %}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

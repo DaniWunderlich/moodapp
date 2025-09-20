@@ -1,0 +1,78 @@
+{% extends "moods/base.html" %}
+{% load static i18n l10n %}
+{% block title %}{% trans "Mein Verlauf" %} – MoodApp{% endblock %}
+{% block content %}
+  <h1>{% trans "Mein Verlauf" %}</h1>
+
+  <div class="card">
+    <div class="rangebar">
+      <form method="get" class="rangeform">
+        <label for="days"><strong>{% trans "Zeitraum" %}:</strong></label>
+        <select id="days" name="days" onchange="this.form.submit()">
+          {% for d in days_choices %}
+            <option value="{{ d }}" {% if d == days %}selected{% endif %}>
+              {% blocktrans with d=d %}Letzte {{ d }} Tage{% endblocktrans %}
+            </option>
+          {% endfor %}
+        </select>
+        <noscript><button type="submit">{% trans "Anzeigen" %}</button></noscript>
+      </form>
+      <div class="muted">{% blocktrans with n=entries_count %}Einträge im Zeitraum: {{ n }}{% endblocktrans %}</div>
+    </div>
+
+    <h3 style="margin-top:.5rem;">
+      {% blocktrans with d=days %}Verlauf (Grafik) – letzte {{ d }} Tage{% endblocktrans %}
+    </h3>
+
+    {% if chart.count %}
+      {% localize off %}
+      <svg class="sparkline" viewBox="0 0 {{ chart.width }} {{ chart.height }}" role="img" aria-label="{% trans 'Mood Verlauf' %}">
+        <desc>{% blocktrans with n=chart.count %}Balkendiagramm der letzten {{ n }} Mood-Einträge{% endblocktrans %}</desc>
+        <g class="grid">
+          <line x1="0" y1="{{ chart.grid.top }}"   x2="{{ chart.width }}" y2="{{ chart.grid.top }}"></line>
+          <line x1="0" y1="{{ chart.grid.zero }}"  x2="{{ chart.width }}" y2="{{ chart.grid.zero }}" class="zero"></line>
+          <line x1="0" y1="{{ chart.grid.bottom }}" x2="{{ chart.width }}" y2="{{ chart.grid.bottom }}"></line>
+        </g>
+        {% for b in chart.bars %}
+          <rect x="{{ b.x }}" y="{{ b.y }}" width="{{ b.w }}" height="{{ b.h }}" rx="3" ry="3"
+                style="fill:{% if b.cls == 'pos' %}var(--pos-2){% else %}var(--neg-2){% endif %}"></rect>
+        {% endfor %}
+        <text x="6" y="{{ chart.grid.zero|add:'-6' }}" class="axislbl">0</text>
+      </svg>
+      {% endlocalize %}
+      <p class="muted">{% trans "Skala: obere Linie = Max, mittlere Linie = 0, untere Linie = Min. Balken: deine letzten Einträge (links → rechts)." %}</p>
+    {% else %}
+      <p>{% trans "Noch keine Einträge vorhanden." %}</p>
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <!-- HIER war vorher 'Letzte 30 Einträge' hart kodiert -->
+    <h3 style="margin-top:0;">
+      {% blocktrans with d=days %}Einträge der letzten {{ d }} Tage{% endblocktrans %}
+    </h3>
+    <table class="table zebra hover">
+      <thead class="thead">
+        <tr>
+          <th>{% trans "Datum" %}</th>
+          <th>{% trans "Score" %}</th>
+          <th>{% trans "Label" %}</th>
+          <th>{% trans "Notiz" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for e in entries %}
+        <tr class="w3-hover-dark-gray">
+          <td>{{ e.date|date:"d.m.Y" }}</td>
+          <td class="center"><span class="pill" data-score="{{ e.score }}">{{ e.score }}</span></td>
+          <td>{{ e.get_score_display }}</td>
+          <td>{{ e.note }}</td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="4">{% trans "Noch keine Einträge." %}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    <p class="muted">{% trans "Vergangene Tage sind read-only. Änderungen sind nur am jeweiligen Tag möglich." %}</p>
+  </div>
+{% endblock %}

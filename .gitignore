@@ -1,0 +1,93 @@
+# -------------------------
+# Python / Packaging
+# -------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+build/
+dist/
+.eggs/
+*.egg-info/
+pip-wheel-metadata/
+pip-selfcheck.json
+
+# -------------------------
+# Virtual Environments
+# -------------------------
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.pyenv/
+.pdm.toml
+__pypackages__/
+
+# -------------------------
+# Django
+# -------------------------
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Static files collected by `collectstatic` (WhiteNoise serves from here)
+staticfiles/
+
+# Optional user uploads (enable if you add uploads)
+media/
+
+# i18n: track .po, ignore compiled .mo
+locale/**/django.mo
+locale/**/LC_MESSAGES/*.mo
+
+# -------------------------
+# Tests / Coverage
+# -------------------------
+.pytest_cache/
+.cache/
+.coverage*
+htmlcov/
+.cover/
+
+# -------------------------
+# Editors / IDE / OS
+# -------------------------
+# JetBrains / PyCharm
+.idea/
+*.iml
+
+# VS Code (ignore all; remove if you prefer to track specific files)
+.vscode/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# -------------------------
+# Docker
+# -------------------------
+docker-compose.override.yml
+
+# -------------------------
+# Env files
+# -------------------------
+# Keep only example env files in git
+.env
+.env.*
+!.env.example
+!.env.dev.example
+!.env.docker.example
+!.env.prod.example
+
+# -------------------------
+# (Optional) Node / Frontend
+# -------------------------
+node_modules/
+
+# -------------------------
+# Keep duplicates out (some templates re-list these)
+# -------------------------
+# (intentionally left blank)

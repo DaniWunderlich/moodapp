@@ -1,0 +1,22 @@
+# Start from production deps
+-r requirements.txt
+
+# --- Testing ---
+pytest==8.*            # test runner
+pytest-django==4.*     # Django integration for pytest
+coverage[toml]==7.*    # coverage engine (with pyproject/TOML support)
+pytest-cov==5.*        # pytest coverage plugin
+pytest-env==0.8.2
+
+
+# --- Test helpers (optional but handy) ---
+freezegun==1.*         # freeze time in tests
+model-bakery==1.*      # quick model instances without manual factories
+
+# --- Lint/format (optional) ---
+# black==24.*
+# isort==5.*
+# flake8==7.*
+
+# --- Optional env helper (not required; we use django-environ) ---
+# python-dotenv==1.0.*

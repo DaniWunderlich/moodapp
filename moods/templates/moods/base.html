@@ -1,0 +1,135 @@
+{% load static i18n %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}" data-theme="light">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>{% block title %}MoodApp{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'moods/css/theme.css' %}">
+  {% block head %}{% endblock %}
+  <script>
+    // Theme: System-Default, persistiert als 'light' | 'dark' | 'system'
+    (function(){
+      try {
+        const saved = localStorage.getItem('theme') || 'system';
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const mode = (saved === 'system') ? (prefersDark ? 'dark':'light') : saved;
+        document.documentElement.setAttribute('data-theme', mode);
+      } catch(e) {}
+    })();
+  </script>
+</head>
+<body>
+  <nav class="topbar">
+    <div class="tabs">
+      {% with request.resolver_match.url_name as urlname %}
+        <a href="{% url 'moods:today' %}"
+           class="tab tab-today {% if urlname == 'today' %}active{% endif %}">{% trans "Heute" %}</a>
+        <a href="{% url 'moods:history' %}"
+           class="tab tab-history {% if urlname == 'history' %}active{% endif %}">{% trans "Mein Verlauf" %}</a>
+        <a href="{% url 'moods:team' %}"
+           class="tab tab-team {% if urlname == 'team' %}active{% endif %}">{% trans "Team" %}</a>
+      {% endwith %}
+    </div>
+
+    <div class="actions">
+      <!-- Language dropdown mit echten SVG-Flaggen (POST /i18n/setlang) -->
+      <details class="langdrop">
+        <summary class="langbtn" title="{% trans 'Sprache wählen' %}" aria-label="{% trans 'Sprache wählen' %}">🌐</summary>
+        <div class="langmenu">
+          <form method="post" action="{% url 'set_language' %}">
+            {% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path|default:'/' }}">
+            <input type="hidden" name="language" value="de">
+            <button type="submit" class="flagbtn" title="Deutsch" aria-label="Deutsch">
+              <!-- DE -->
+              <svg viewBox="0 0 3 2" class="flag"><rect width="3" height="2" fill="#000"/><rect y="0.66" width="3" height="0.67" fill="#DD0000"/><rect y="1.33" width="3" height="0.67" fill="#FFCE00"/></svg>
+            </button>
+          </form>
+          <form method="post" action="{% url 'set_language' %}">
+            {% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path|default:'/' }}">
+            <input type="hidden" name="language" value="gsw">
+            <button type="submit" class="flagbtn" title="Schwiizerdütsch" aria-label="Schwiizerdütsch">
+              <!-- CH -->
+              <svg viewBox="0 0 3 2" class="flag"><rect width="3" height="2" fill="#d52b1e"/><rect x="1.15" y="0.4" width="0.7" height="1.2" fill="#fff"/><rect x="0.9" y="0.65" width="1.2" height="0.7" fill="#fff"/></svg>
+            </button>
+          </form>
+          <form method="post" action="{% url 'set_language' %}">
+            {% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path|default:'/' }}">
+            <input type="hidden" name="language" value="pl">
+            <button type="submit" class="flagbtn" title="Polski" aria-label="Polski">
+              <!-- PL -->
+              <svg viewBox="0 0 3 2" class="flag"><rect width="3" height="1" y="0" fill="#fff"/><rect width="3" height="1" y="1" fill="#dc143c"/></svg>
+            </button>
+          </form>
+          <form method="post" action="{% url 'set_language' %}">
+            {% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path|default:'/' }}">
+            <input type="hidden" name="language" value="en">
+            <button type="submit" class="flagbtn" title="English" aria-label="English">
+              <!-- GB (vereinfachte Union Jack) -->
+              <svg viewBox="0 0 3 2" class="flag">
+                <rect width="3" height="2" fill="#012169"/>
+                <path d="M0,0 L3,2 M3,0 L0,2" stroke="#fff" stroke-width="0.3"/>
+                <path d="M0,0 L3,2 M3,0 L0,2" stroke="#C8102E" stroke-width="0.18"/>
+                <rect x="0" y="0.85" width="3" height="0.3" fill="#fff"/>
+                <rect x="1.35" y="0" width="0.3" height="2" fill="#fff"/>
+                <rect x="0" y="0.9" width="3" height="0.2" fill="#C8102E"/>
+                <rect x="1.4" y="0" width="0.2" height="2" fill="#C8102E"/>
+              </svg>
+            </button>
+          </form>
+          <form method="post" action="{% url 'set_language' %}">
+            {% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path|default:'/' }}">
+            <input type="hidden" name="language" value="fr">
+            <button type="submit" class="flagbtn" title="Français" aria-label="Français">
+              <!-- FR -->
+              <svg viewBox="0 0 3 2" class="flag"><rect width="1" height="2" x="0" fill="#0055A4"/><rect width="1" height="2" x="1" fill="#fff"/><rect width="1" height="2" x="2" fill="#EF4135"/></svg>
+            </button>
+          </form>
+          <form method="post" action="{% url 'set_language' %}">
+            {% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path|default:'/' }}">
+            <input type="hidden" name="language" value="es">
+            <button type="submit" class="flagbtn" title="Español" aria-label="Español">
+              <!-- ES -->
+              <svg viewBox="0 0 3 2" class="flag"><rect width="3" height="2" fill="#AA151B"/><rect y="0.4" width="3" height="1.2" fill="#F1BF00"/></svg>
+            </button>
+          </form>
+        </div>
+      </details>
+
+      <button id="themeToggle" class="themetoggle" aria-label="{% trans 'Theme wechseln' %}" title="{% trans 'Theme wechseln' %}">🖥️</button>
+
+      {% if user.is_authenticated %}
+        <span class="muted">{% trans "Eingeloggt als" %} {{ user.username }}</span>
+        <!-- Logout via POST (vermeidet 405) -->
+        <form action="{% url 'logout' %}" method="post" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" class="themetoggle" title="{% trans 'Logout' %}">🔓 {% trans "Logout" %}</button>
+        </form>
+      {% else %}
+        <a href="{% url 'login' %}" class="themetoggle" title="{% trans 'Login' %}">🔐 {% trans "Login" %}</a>
+      {% endif %}
+    </div>
+  </nav>
+
+  {% if messages %}
+    <div class="card">{% for m in messages %}<div>{{ m }}</div>{% endfor %}</div>
+  {% endif %}
+
+  {% block content %}{% endblock %}
+
+  <script>
+    // Theme Toggle: light → dark → system
+    (function(){
+      const btn = document.getElementById('themeToggle');
+      function saved(){ try { return localStorage.getItem('theme') || 'system'; } catch(e){ return 'system'; } }
+      function prefers(){ return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark':'light'; }
+      function compute(){ const s=saved(); return s==='system' ? prefers() : s; }
+      function emoji(s,mode){ return s==='system' ? '🖥️' : (mode==='dark'?'🌜':'🌞'); }
+      function apply(){ const s=saved(); const m=compute(); document.documentElement.setAttribute('data-theme', m); if(btn) btn.textContent=emoji(s,m); }
+      apply();
+      btn?.addEventListener('click', ()=>{ const s=saved(); const n=s==='light'?'dark':(s==='dark'?'system':'light'); try{localStorage.setItem('theme',n);}catch(e){} apply(); });
+      try{ const mq=window.matchMedia('(prefers-color-scheme: dark)'); mq.addEventListener('change', ()=>{ if(saved()==='system') apply(); }); }catch(e){}
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+{% extends "moods/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Login" %} – MoodApp{% endblock %}
+
+{% block content %}
+  <h1 style="margin-bottom:.25rem;">{% trans "Login" %}</h1>
+
+  {% if form.errors %}
+    <div class="card">
+      <p>{% trans "Bitte Benutzername und Passwort prüfen." %}</p>
+    </div>
+  {% endif %}
+
+  <div class="card">
+    <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+
+      <div>
+        <label for="id_username"><strong>{% trans "Benutzername" %}</strong></label><br>
+        <input type="text"
+               name="username"
+               id="id_username"
+               required
+               autofocus
+               value="{{ form.data.username|default_if_none:'' }}"
+               style="width:100%;max-width:360px;">
+      </div>
+
+      <div style="margin-top:.6rem;">
+        <label for="id_password"><strong>{% trans "Passwort" %}</strong></label><br>
+        <input type="password"
+               name="password"
+               id="id_password"
+               required
+               style="width:100%;max-width:360px;">
+      </div>
+
+      {% if next %}
+        <input type="hidden" name="next" value="{{ next }}">
+      {% endif %}
+
+      <div style="margin-top:1rem;">
+        <button type="submit" class="btn btn-rock">
+          {% trans "Login" %}
+        </button>
+      </div>
+    </form>
+  </div>
+{% endblock %}

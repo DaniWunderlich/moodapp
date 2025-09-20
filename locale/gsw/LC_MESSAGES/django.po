@@ -1,0 +1,306 @@
+# Swiss German (Schwiizerdütsch) translations for MoodApp.
+# Dialekt: neutral (ZH/Mittelland). Feinjustierung je Region möglich.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-19 16:21+0200\n"
+"PO-Revision-Date: 2025-09-19 00:00+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Swiss German\n"
+"Language: gsw\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\moods\forms.py:13 .\moods\forms.py:25
+#: .\moods\templates\moods\today.html:14
+msgid "Stimmung"
+msgstr "Luune"
+
+#: .\moods\forms.py:14 .\moods\templates\moods\history.html:60
+#: .\moods\templates\moods\today.html:36
+msgid "Notiz"
+msgstr "Bemerkig"
+
+#: .\moods\forms.py:17
+msgid "Optional: kurzer Kontext"
+msgstr "Optional: churze Zämmehang"
+
+#: .\moods\forms.py:29
+msgid "Optional: kurzer Kommentar"
+msgstr "Optional: churze Kommentar"
+
+#: .\moods\models.py:9
+msgid "no comment ☠️"
+msgstr "kei Kommentar ☠️"
+
+#: .\moods\models.py:10
+msgid "unterirdisch 💀"
+msgstr "unterirdisch 💀"
+
+#: .\moods\models.py:11
+msgid "meh 😵‍💫"
+msgstr "meh 😵‍💫"
+
+#: .\moods\models.py:12
+msgid "mau 🙁"
+msgstr "mau 🙁"
+
+#: .\moods\models.py:13
+msgid "passt scho 😐"
+msgstr "goht so 😐"
+
+#: .\moods\models.py:14
+msgid "ganz okay 🙂"
+msgstr "ganz okay 🙂"
+
+#: .\moods\models.py:15
+msgid "gut drauf 😎"
+msgstr "guet druf 😎"
+
+#: .\moods\models.py:16
+msgid "geilo 🤩"
+msgstr "mega 🤩"
+
+#: .\moods\models.py:17
+msgid "geilomatico 🚀"
+msgstr "huere guet 🚀"
+
+#: .\moods\templates\moods\base.html:27
+#: .\moods\templates\moods\team_overview.html:30
+#: .\moods\templates\moods\today.html:4 .\moods\templates\moods\today.html:7
+msgid "Heute"
+msgstr "Hüt"
+
+#: .\moods\templates\moods\base.html:29 .\moods\templates\moods\history.html:3
+#: .\moods\templates\moods\history.html:5
+msgid "Mein Verlauf"
+msgstr "Mi Verlauf"
+
+#: .\moods\templates\moods\base.html:31
+#: .\moods\templates\moods\team_overview.html:4
+#: .\moods\templates\moods\team_overview.html:7
+msgid "Team"
+msgstr "Team"
+
+#: .\moods\templates\moods\base.html:38
+msgid "Sprache wählen"
+msgstr "Sproch wähle"
+
+#: .\moods\templates\moods\base.html:99
+msgid "Theme wechseln"
+msgstr "Theme wechsle"
+
+#: .\moods\templates\moods\base.html:102
+msgid "Eingeloggt als"
+msgstr "Iigloggt als"
+
+#: .\moods\templates\moods\base.html:106
+msgid "Logout"
+msgstr "Uslogge"
+
+#: .\moods\templates\moods\base.html:109
+#: .\moods\templates\registration\login.html:4
+#: .\moods\templates\registration\login.html:7
+msgid "Login"
+msgstr "Ilogge"
+
+#: .\moods\templates\moods\history.html:10
+#: .\moods\templates\moods\team_overview.html:25
+msgid "Zeitraum"
+msgstr "Ziitruum"
+
+#: .\moods\templates\moods\history.html:14
+#: .\moods\templates\moods\team_overview.html:32
+#, python-format
+msgid "Letzte %(d)s Tage"
+msgstr "Letschti %(d)s Täg"
+
+#: .\moods\templates\moods\history.html:18
+#: .\moods\templates\moods\team_overview.html:37
+msgid "Anzeigen"
+msgstr "Azeige"
+
+#: .\moods\templates\moods\history.html:20
+#, python-format
+msgid "Einträge im Zeitraum: %(n)s"
+msgstr "Iiträg im Ziitruum: %(n)s"
+
+#: .\moods\templates\moods\history.html:24
+#, python-format
+msgid "Verlauf (Grafik) – letzte %(d)s Tage"
+msgstr "Verlauf (Grafik) – letschti %(d)s Täg"
+
+#: .\moods\templates\moods\history.html:29
+msgid "Mood Verlauf"
+msgstr "Luune-Verlauf"
+
+#: .\moods\templates\moods\history.html:30
+#, python-format
+msgid "Balkendiagramm der letzten %(n)s Mood-Einträge"
+msgstr "Säulendiagramm vo de letschte %(n)s Luune-Iiträg"
+
+#: .\moods\templates\moods\history.html:43
+msgid ""
+"Skala: obere Linie = Max, mittlere Linie = 0, untere Linie = Min. Balken: "
+"deine letzten Einträge (links → rechts)."
+msgstr ""
+"Skala: obersti Linie = Max, mittleri Linie = 0, untersti Linie = Min. Säule: "
+"dini letschte Iiträg (links → rächts)."
+
+#: .\moods\templates\moods\history.html:45
+msgid "Noch keine Einträge vorhanden."
+msgstr "No kei Iiträg vorhande."
+
+#: .\moods\templates\moods\history.html:52
+#, python-format
+msgid "Einträge der letzten %(d)s Tage"
+msgstr "Iiträg vo de letschte %(d)s Täg"
+
+#: .\moods\templates\moods\history.html:57
+#: .\moods\templates\moods\team_overview_week.html:31
+msgid "Datum"
+msgstr "Datum"
+
+#: .\moods\templates\moods\history.html:58
+#: .\moods\templates\moods\team_overview.html:99
+msgid "Score"
+msgstr "Score"
+
+#: .\moods\templates\moods\history.html:59
+#: .\moods\templates\moods\team_overview.html:100
+msgid "Label"
+msgstr "Label"
+
+#: .\moods\templates\moods\history.html:72
+msgid "Noch keine Einträge."
+msgstr "No kei Iiträg."
+
+#: .\moods\templates\moods\history.html:76
+msgid ""
+"Vergangene Tage sind read-only. Änderungen sind nur am jeweiligen Tag "
+"möglich."
+msgstr ""
+"Vergangeni Täg sind nur läsbar. Änderige sind nume am jewilige Tag möglich."
+
+#: .\moods\templates\moods\team_overview.html:13
+#: .\moods\templates\moods\team_overview_week.html:13
+msgid "Aggregiert für heute"
+msgstr "Zämefasst für Hüt"
+
+#: .\moods\templates\moods\team_overview.html:16
+#: .\moods\templates\moods\team_overview_week.html:16
+msgid "Woche (Details je Tag)"
+msgstr "Wuche (Detail pro Tag)"
+
+#: .\moods\templates\moods\team_overview.html:41
+#: .\moods\templates\moods\team_overview_week.html:22
+#, python-format
+msgid "Zeitraum: %(a)s – %(b)s"
+msgstr "Ziitruum: %(a)s – %(b)s"
+
+#: .\moods\templates\moods\team_overview.html:43
+#: .\moods\templates\moods\team_overview_week.html:24
+#, python-format
+msgid "Einträge: %(n)s"
+msgstr "Iiträg: %(n)s"
+
+#: .\moods\templates\moods\team_overview.html:48
+msgid "Verteilung nach Score – heute"
+msgstr "Verteilig nach Score – Hüt"
+
+#: .\moods\templates\moods\team_overview.html:50
+#, python-format
+msgid "Verteilung nach Score – letzte %(d)s Tage"
+msgstr "Verteilig nach Score – letschti %(d)s Täg"
+
+#: .\moods\templates\moods\team_overview.html:57
+msgid "Score-Verteilung"
+msgstr "Score-Verteilig"
+
+#: .\moods\templates\moods\team_overview.html:58
+msgid "Balkendiagramm der Team-Score-Verteilung"
+msgstr "Säulendiagramm vo de Team-Score-Verteilig"
+
+#: .\moods\templates\moods\team_overview.html:78
+msgid "Kennzahlen"
+msgstr "Kennzahlä"
+
+#: .\moods\templates\moods\team_overview.html:80
+msgid "Durchschnitt"
+msgstr "Durschnitt"
+
+#: .\moods\templates\moods\team_overview.html:86
+#: .\moods\templates\moods\team_overview_week.html:34
+msgid "Median"
+msgstr "Median"
+
+#: .\moods\templates\moods\team_overview.html:101
+msgid "Anzahl"
+msgstr "Aazahl"
+
+#: .\moods\templates\moods\team_overview.html:102
+msgid "Anteil"
+msgstr "Aateil"
+
+#: .\moods\templates\moods\team_overview.html:117
+msgid "Anonym: Es werden nur Aggregatwerte angezeigt, keine Nutzerliste."
+msgstr "Anonym: Es wirdä nume Aggregatwärt azeigt, kei Nutzerlischtä."
+
+#: .\moods\templates\moods\team_overview.html:121
+msgid "Noch keine Einträge im gewählten Zeitraum."
+msgstr "Kei Iiträg im gwählte Ziitruum."
+
+#: .\moods\templates\moods\team_overview_week.html:4
+#: .\moods\templates\moods\team_overview_week.html:7
+msgid "Team – Woche"
+msgstr "Team – Wuche"
+
+#: .\moods\templates\moods\team_overview_week.html:32
+msgid "Anzahl Einträge"
+msgstr "Aazahl Iiträg"
+
+#: .\moods\templates\moods\team_overview_week.html:33
+msgid "arithmetisches Mittel"
+msgstr "arithmetischs Mittel"
+
+#: .\moods\templates\moods\team_overview_week.html:33
+msgid "Durchschnitt (Ø)"
+msgstr "Durschnitt (Ø)"
+
+#: .\moods\templates\moods\team_overview_week.html:34
+msgid "Median der Einzelwerte"
+msgstr "Median vo de Einzelwärt"
+
+#: .\moods\templates\moods\team_overview_week.html:57
+msgid "Summe/Woche"
+msgstr "Total/Wuche"
+
+#: .\moods\templates\moods\today.html:41
+msgid "Speichern"
+msgstr "Speichere"
+
+#: .\moods\templates\registration\login.html:11
+msgid "Bitte Benutzername und Passwort prüfen."
+msgstr "Bitte Benutzername und Passwort prüefe."
+
+#: .\moods\templates\registration\login.html:20
+msgid "Benutzername"
+msgstr "Benutzername"
+
+#: .\moods\templates\registration\login.html:31
+msgid "Passwort"
+msgstr "Passwort"
+
+#: .\moods\templates\registration\login.html:45
+#, fuzzy
+#| msgid "Eingeloggt als"
+msgid "Einloggen"
+msgstr "Iigloggt als"
+
+#: .\moods\views.py:64
+msgid "Danke! Dein heutiger Mood wurde gespeichert."
+msgstr "Merci! Dini hütigi Luune isch gspeichert."
